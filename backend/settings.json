@@ -1,0 +1,31 @@
+{
+  "market": "indian_stocks",
+  "stock_universe": "nifty_50",
+  "style": "day_trade",
+  "risk": "medium",
+  "trade_amount": 25000.0,
+  "risk_per_trade_pct": 0.02,
+  "min_confidence": 55,
+  "max_daily_loss_pct": 0.04,
+  "max_open_positions": 8,
+  "max_trades_per_day": 30,
+  "loss_streak_cooldown": 3,
+  "cooldown_minutes": 30,
+  "stop_loss_pct": 0.015,
+  "take_profit_pct": 0.03,
+  "min_rr": 1.5,
+  "max_holding_minutes_day_trade": 120,
+  "no_averaging_down": true,
+  "rsi_min": 20.0,
+  "rsi_max": 80.0,
+  "min_price": 0.0,
+  "max_price": 1000000.0,
+  "min_volume": 0.0,
+  "require_uptrend": true,
+  "auto_start": true,
+  "loop_interval_seconds": 20,
+  "assets": [
+    "RELIANCE.NS",
+    "TCS.NS"
+  ]
+}
