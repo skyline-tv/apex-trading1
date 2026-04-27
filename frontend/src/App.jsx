@@ -11,7 +11,7 @@ export default function App() {
       <div className="min-h-screen bg-bg lg:flex">
         <Navbar />
         <main className="min-h-screen lg:flex-1 lg:ml-56">
-          <div className="max-w-5xl mx-auto px-4 pt-20 pb-24 sm:px-6 lg:px-8 lg:py-8">
+          <div className="max-w-6xl mx-auto px-4 pt-20 pb-28 sm:px-6 lg:px-10 lg:pt-10 lg:pb-16">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/wallet" element={<Wallet />} />

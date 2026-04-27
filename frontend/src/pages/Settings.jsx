@@ -33,7 +33,7 @@ function Select({ label, value, onChange, options }) {
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-bg border border-border text-white font-mono text-sm px-4 py-3 rounded-lg focus:outline-none focus:border-accent/60 transition"
+        className="field-control w-full px-4 py-3 text-sm"
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>{o.label}</option>
@@ -56,7 +56,7 @@ function NumberInput({ label, value, onChange, min, max, step = 1 }) {
         min={min}
         max={max}
         step={step}
-        className="w-full bg-bg border border-border text-white font-mono text-sm px-4 py-3 rounded-lg focus:outline-none focus:border-accent/60 transition"
+        className="field-control w-full px-4 py-3 text-sm"
       />
     </div>
   )
@@ -175,22 +175,27 @@ export default function Settings() {
     <div className="animate-fade-in space-y-6 max-w-2xl">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="font-sans font-800 text-2xl text-white tracking-tight">Settings</h1>
+          <h1 className="font-sans font-800 text-2xl sm:text-3xl text-white tracking-tight">Settings</h1>
           <p className="font-mono text-[11px] text-muted mt-0.5 tracking-widest">
             INDIAN MARKET AI CONFIG
           </p>
         </div>
-        <button
-          onClick={load}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg border border-border text-muted hover:text-white hover:border-white/20 transition font-mono text-xs"
-        >
+        <button type="button" onClick={load} className="btn-ghost">
           {loading ? <Spinner size={13} /> : <RefreshCw size={13} />}
           Reload
         </button>
       </div>
 
-      {error && <div className="border border-red/30 bg-red/5 rounded-xl px-4 py-3 font-mono text-xs text-red">{error}</div>}
-      {success && <div className="border border-accent/30 bg-accent/5 rounded-xl px-4 py-3 font-mono text-xs text-accent">{success}</div>}
+      {error && (
+        <div role="alert" className="rounded-2xl border border-red/35 bg-red/[0.06] px-4 py-3 font-mono text-xs text-red shadow-sm shadow-black/20">
+          {error}
+        </div>
+      )}
+      {success && (
+        <div className="rounded-2xl border border-accent/30 bg-accent/[0.06] px-4 py-3 font-mono text-xs text-accent shadow-sm shadow-black/20">
+          {success}
+        </div>
+      )}
 
       {loading ? (
         <div className="flex justify-center py-16"><Spinner size={32} /></div>
@@ -275,8 +280,9 @@ export default function Settings() {
                 <p className="font-mono text-[10px] text-muted mt-1">Blocks adding to losing positions.</p>
               </div>
               <button
+                type="button"
                 onClick={() => set('no_averaging_down')(!form.no_averaging_down)}
-                className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${form.no_averaging_down ? 'bg-accent' : 'bg-border'}`}
+                className={`relative h-6 w-12 rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${form.no_averaging_down ? 'bg-accent' : 'bg-border'}`}
               >
                 <span
                   className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${form.no_averaging_down ? 'translate-x-7' : 'translate-x-1'}`}
@@ -300,8 +306,9 @@ export default function Settings() {
                 <p className="font-mono text-[10px] text-muted mt-1">Only allow stocks where MA20 is above MA50.</p>
               </div>
               <button
+                type="button"
                 onClick={() => set('require_uptrend')(!form.require_uptrend)}
-                className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${form.require_uptrend ? 'bg-accent' : 'bg-border'}`}
+                className={`relative h-6 w-12 rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${form.require_uptrend ? 'bg-accent' : 'bg-border'}`}
               >
                 <span
                   className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${form.require_uptrend ? 'translate-x-7' : 'translate-x-1'}`}
@@ -311,24 +318,24 @@ export default function Settings() {
           </Card>
 
           <Card>
-            <div className="flex items-center justify-between border-b border-border pb-5 mb-5">
+            <div className="flex items-center justify-between border-b border-border/80 pb-5 mb-5">
               <div>
                 <p className="font-mono text-sm text-white font-bold">Respect NSE hours</p>
                 <p className="font-mono text-[10px] text-muted mt-1">
-                  Mon–Fri 09:15–15:30 IST only. Stops paper trades when the cash market is closed (free data is still stale after hours).
+                  Uses an Indian equity session calendar when available, otherwise IST weekday hours. Stops paper trades outside session.
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => set('respect_market_hours')(!form.respect_market_hours)}
-                className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${form.respect_market_hours ? 'bg-accent' : 'bg-border'}`}
+                className={`relative h-6 w-12 rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${form.respect_market_hours ? 'bg-accent' : 'bg-border'}`}
               >
                 <span
                   className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${form.respect_market_hours ? 'translate-x-7' : 'translate-x-1'}`}
                 />
               </button>
             </div>
-            <div className="flex items-center justify-between border-b border-border pb-5 mb-5">
+            <div className="flex items-center justify-between border-b border-border/80 pb-5 mb-5">
               <div>
                 <p className="font-mono text-sm text-white font-bold">Require Fresh Indicators</p>
                 <p className="font-mono text-[10px] text-muted mt-1">
@@ -338,14 +345,14 @@ export default function Settings() {
               <button
                 type="button"
                 onClick={() => set('require_fresh_indicators')(!form.require_fresh_indicators)}
-                className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${form.require_fresh_indicators ? 'bg-accent' : 'bg-border'}`}
+                className={`relative h-6 w-12 rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${form.require_fresh_indicators ? 'bg-accent' : 'bg-border'}`}
               >
                 <span
                   className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${form.require_fresh_indicators ? 'translate-x-7' : 'translate-x-1'}`}
                 />
               </button>
             </div>
-            <div className="flex items-center justify-between border-b border-border pb-5 mb-5">
+            <div className="flex items-center justify-between border-b border-border/80 pb-5 mb-5">
               <div>
                 <p className="font-mono text-sm text-white font-bold">Watchlist Only</p>
                 <p className="font-mono text-[10px] text-muted mt-1">
@@ -355,7 +362,7 @@ export default function Settings() {
               <button
                 type="button"
                 onClick={() => set('watchlist_only')(!form.watchlist_only)}
-                className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${form.watchlist_only ? 'bg-accent' : 'bg-border'}`}
+                className={`relative h-6 w-12 rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${form.watchlist_only ? 'bg-accent' : 'bg-border'}`}
               >
                 <span
                   className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${form.watchlist_only ? 'translate-x-7' : 'translate-x-1'}`}
@@ -370,7 +377,7 @@ export default function Settings() {
               <button
                 type="button"
                 onClick={() => set('auto_start')(!form.auto_start)}
-                className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${form.auto_start ? 'bg-accent' : 'bg-border'}`}
+                className={`relative h-6 w-12 rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${form.auto_start ? 'bg-accent' : 'bg-border'}`}
               >
                 <span
                   className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${form.auto_start ? 'translate-x-7' : 'translate-x-1'}`}
@@ -380,9 +387,10 @@ export default function Settings() {
           </Card>
 
           <button
+            type="button"
             onClick={handleSave}
             disabled={saving}
-            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-accent text-bg font-sans font-700 text-sm tracking-wider hover:bg-accent/90 transition disabled:opacity-50"
+            className="btn-primary w-full py-3.5 text-sm shadow-elevate"
           >
             {saving ? <Spinner size={15} /> : <Save size={15} />}
             {saving ? 'Saving...' : 'Save Settings'}

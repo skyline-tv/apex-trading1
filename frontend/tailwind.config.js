@@ -17,6 +17,9 @@ export default {
         red:     '#ff4f5e',
         blue:    '#58a6ff',
       },
+      boxShadow: {
+        'elevate': '0 12px 40px -12px rgba(0, 0, 0, 0.55)',
+      },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'fade-in': 'fadeIn 0.4s ease forwards',

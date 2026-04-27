@@ -196,33 +196,32 @@ export default function Dashboard() {
     <div className="animate-fade-in space-y-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h1 className="font-sans font-800 text-2xl text-white tracking-tight">Dashboard</h1>
-          <p className="font-mono text-[11px] text-muted mt-0.5 tracking-widest">LIVE PAPER TRADING OVERVIEW</p>
+          <h1 className="font-sans font-800 text-2xl sm:text-3xl text-white tracking-tight">Dashboard</h1>
+          <p className="font-mono text-[11px] text-muted mt-1 tracking-widest">LIVE PAPER TRADING OVERVIEW</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <button
+            type="button"
             onClick={() => fullRefresh({ silent: true })}
             disabled={loading}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg border border-border text-muted hover:text-white hover:border-white/20 transition font-mono text-xs"
+            className="btn-ghost"
           >
             {loading || refreshing ? <Spinner size={13} /> : <RefreshCw size={13} />}
             Refresh
           </button>
           <button
+            type="button"
             onClick={handleRun}
             disabled={running}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-accent text-bg font-sans font-700 text-xs tracking-wider hover:bg-accent/90 transition disabled:opacity-50"
+            className="btn-primary"
           >
             {running ? <Spinner size={13} /> : <Play size={13} />}
             {running ? 'Running...' : 'Run Universe Cycle'}
           </button>
           <button
+            type="button"
             onClick={toggleAutoTrade}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition font-mono text-xs ${
-              autoStatus?.running
-                ? 'border-red/40 text-red hover:bg-red/10'
-                : 'border-accent/40 text-accent hover:bg-accent/10'
-            }`}
+            className={autoStatus?.running ? 'btn-outline-danger' : 'btn-outline-accent'}
           >
             {autoStatus?.running ? <Pause size={13} /> : <Activity size={13} />}
             {autoStatus?.running ? 'Stop Auto' : 'Start Auto'}
@@ -231,27 +230,68 @@ export default function Dashboard() {
       </div>
 
       {autoStatus && (
-        <div className="border border-border bg-surface rounded-xl px-4 py-3 font-mono text-xs text-muted flex flex-wrap gap-x-6 gap-y-2">
-          <span>Status: <span className={autoStatus.running ? 'text-accent' : 'text-yellow'}>{autoStatus.running ? 'RUNNING' : 'IDLE'}</span></span>
-          <span>Loop: {autoStatus.interval_seconds}s</span>
-          <span>Universe: {autoStatus.stock_universe_label || autoStatus.stock_universe}</span>
-          <span>Universe stocks: {autoStatus.universe_asset_count ?? (autoStatus.assets || []).length}</span>
-          <span>Cycle stocks: {autoStatus.cycle_asset_count ?? '-'}</span>
-          <span>Watchlist only: {autoStatus.watchlist_only ? 'ON' : 'OFF'}</span>
-          <span>Max/cycle: {autoStatus.max_symbols_per_cycle || 'ALL'}</span>
-          <span>Fresh-data gate: {autoStatus.require_fresh_indicators ? 'ON' : 'OFF'}</span>
-          <span>NSE session: <span className={autoStatus.nse_session_open ? 'text-accent' : 'text-yellow'}>{autoStatus.nse_session_open ? 'OPEN' : 'CLOSED'}</span></span>
-          <span>Last cycle: {formatStatusTime(autoStatus.last_run_at)}</span>
-          {autoStatus.nse_session_detail && <span>Session detail: {autoStatus.nse_session_detail}</span>}
-          {refreshing && <span className="text-blue">Refreshing values...</span>}
-          {autoStatus.last_error && <span className="text-yellow">Note: {autoStatus.last_error}</span>}
+        <Card className="border-border/70">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <CardLabel>Session &amp; loop</CardLabel>
+              <p className="font-mono text-[10px] text-muted/80 mt-1 max-w-prose">
+                Market gate, scan size, and last auto-cycle status. Indicator data is free/delayed — treat as simulation only.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <span
+                className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-bold tracking-wide ${
+                  autoStatus.running
+                    ? 'border-accent/30 bg-accent/10 text-accent'
+                    : 'border-border text-muted'
+                }`}
+              >
+                <span className={`h-1.5 w-1.5 rounded-full ${autoStatus.running ? 'bg-accent animate-pulse' : 'bg-muted'}`} />
+                {autoStatus.running ? 'AUTO ON' : 'AUTO OFF'}
+              </span>
+            </div>
+          </div>
+          <div className="mt-4 grid gap-x-8 gap-y-2 font-mono text-[11px] text-muted sm:grid-cols-2 lg:grid-cols-3">
+            <span>Loop: <span className="text-white">{autoStatus.interval_seconds}s</span></span>
+            <span>Universe: <span className="text-white">{autoStatus.stock_universe_label || autoStatus.stock_universe}</span></span>
+            <span>Universe stocks: <span className="text-white">{autoStatus.universe_asset_count ?? (autoStatus.assets || []).length}</span></span>
+            <span>Cycle stocks: <span className="text-white">{autoStatus.cycle_asset_count ?? '-'}</span></span>
+            <span>Watchlist only: <span className="text-white">{autoStatus.watchlist_only ? 'ON' : 'OFF'}</span></span>
+            <span>Max/cycle: <span className="text-white">{autoStatus.max_symbols_per_cycle || 'ALL'}</span></span>
+            <span>Fresh-data gate: <span className="text-white">{autoStatus.require_fresh_indicators ? 'ON' : 'OFF'}</span></span>
+            <span>
+              Session:{' '}
+              <span className={autoStatus.nse_session_open ? 'text-accent' : 'text-yellow'}>
+                {autoStatus.nse_session_open ? 'OPEN' : 'CLOSED'}
+              </span>
+            </span>
+            <span>Last cycle: <span className="text-white">{formatStatusTime(autoStatus.last_run_at)}</span></span>
+            {autoStatus.nse_session_detail && (
+              <span className="sm:col-span-2 lg:col-span-3 text-muted/90">
+                {autoStatus.nse_session_detail}
+              </span>
+            )}
+            {refreshing && <span className="text-blue sm:col-span-2">Refreshing live quotes…</span>}
+            {autoStatus.last_error && (
+              <span className="text-yellow sm:col-span-2 lg:col-span-3">
+                Last note: {autoStatus.last_error}
+              </span>
+            )}
+          </div>
+        </Card>
+      )}
+
+      {error && (
+        <div
+          role="alert"
+          className="rounded-2xl border border-red/35 bg-red/[0.06] px-4 py-3 font-mono text-xs text-red shadow-sm shadow-black/20"
+        >
+          {error}
         </div>
       )}
 
-      {error && <div className="border border-red/30 bg-red/5 rounded-xl px-4 py-3 font-mono text-xs text-red">! {error}</div>}
-
       {runResult && !error && (
-        <div className="border border-accent/30 bg-accent/5 rounded-xl px-4 py-3 font-mono text-xs text-accent animate-slide-up">
+        <div className="rounded-2xl border border-accent/30 bg-accent/[0.06] px-4 py-3 font-mono text-xs text-accent shadow-sm shadow-black/20 animate-slide-up">
           {Array.isArray(runResult.results)
             ? `OK Cycle complete: ${runResult.executed_trades || 0} trades executed, ${runResult.skipped_assets || 0} skipped, across ${runResult.total_assets || 0} stocks.`
             : `OK ${runResult.decision} ${runResult.asset} @ ${fmt(runResult.price)} - ${runResult.reason}`}
@@ -397,7 +437,7 @@ export default function Dashboard() {
             <select
               value={asset}
               onChange={(e) => setAsset(e.target.value)}
-              className="bg-bg border border-border text-white font-mono text-xs px-3 py-1.5 rounded-lg focus:outline-none focus:border-accent/60 transition"
+              className="field-control px-3 py-2"
             >
               {assets.map((a) => (
                 <option key={a} value={a}>{a}</option>

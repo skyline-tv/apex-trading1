@@ -75,32 +75,33 @@ export default function Wallet() {
     <div className="animate-fade-in space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="font-sans font-800 text-2xl text-white tracking-tight">Wallet</h1>
+          <h1 className="font-sans font-800 text-2xl sm:text-3xl text-white tracking-tight">Wallet</h1>
           <p className="font-mono text-[11px] text-muted mt-0.5 tracking-widest">
             VIRTUAL ACCOUNT - RS 100,000 STARTING CAPITAL
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <button
-            onClick={fetch}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg border border-border text-muted hover:text-white hover:border-white/20 transition font-mono text-xs"
-          >
+          <button type="button" onClick={fetch} className="btn-ghost">
             {loading ? <Spinner size={13} /> : <RefreshCw size={13} />}
             Refresh
           </button>
-          <button
-            onClick={handleReset}
-            disabled={resetting}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg border border-red/30 text-red hover:bg-red/5 transition font-mono text-xs"
-          >
+          <button type="button" onClick={handleReset} disabled={resetting} className="btn-outline-danger">
             {resetting ? <Spinner size={13} /> : <RotateCcw size={13} />}
             Reset
           </button>
         </div>
       </div>
 
-      {error && <div className="border border-red/30 bg-red/5 rounded-xl px-4 py-3 font-mono text-xs text-red">{error}</div>}
-      {msg && <div className="border border-accent/30 bg-accent/5 rounded-xl px-4 py-3 font-mono text-xs text-accent">{msg}</div>}
+      {error && (
+        <div role="alert" className="rounded-2xl border border-red/35 bg-red/[0.06] px-4 py-3 font-mono text-xs text-red shadow-sm shadow-black/20">
+          {error}
+        </div>
+      )}
+      {msg && (
+        <div className="rounded-2xl border border-accent/30 bg-accent/[0.06] px-4 py-3 font-mono text-xs text-accent shadow-sm shadow-black/20">
+          {msg}
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {stats.map(({ label, value, icon: Icon, color }) => (

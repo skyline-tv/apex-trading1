@@ -5,8 +5,8 @@ export default function Spinner({ size = 16 }) {
       height={size}
       viewBox="0 0 24 24"
       fill="none"
-      className="animate-spin"
-      style={{ color: '#00ff87' }}
+      className="animate-spin text-accent"
+      aria-hidden
     >
       <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeOpacity="0.2" />
       <path

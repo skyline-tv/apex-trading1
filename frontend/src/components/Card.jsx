@@ -2,7 +2,7 @@ export default function Card({ children, className = '', glow = false }) {
   return (
     <div
       className={`
-        bg-surface border border-border rounded-xl p-5
+        bg-surface/95 border border-border/80 rounded-2xl p-5 md:p-6 shadow-sm shadow-black/20
         transition-all duration-200
         ${glow ? 'card-glow' : ''}
         ${className}

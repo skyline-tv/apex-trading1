@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-4 py-2.5 font-sans text-xs font-700 tracking-wider text-bg shadow-lg shadow-black/25 transition hover:bg-accent/90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/45 focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:pointer-events-none disabled:opacity-45;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-border/90 bg-surface/40 px-3 py-2 font-mono text-xs text-muted shadow-sm shadow-black/10 backdrop-blur-sm transition hover:border-white/15 hover:text-white hover:bg-border/30 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:pointer-events-none disabled:opacity-45;
+  }
+  .btn-outline-accent {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-accent/35 bg-accent/[0.04] px-4 py-2.5 font-mono text-xs text-accent shadow-sm shadow-black/15 transition hover:border-accent/55 hover:bg-accent/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:pointer-events-none disabled:opacity-45;
+  }
+  .btn-outline-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-red/35 bg-red/[0.04] px-4 py-2.5 font-mono text-xs text-red shadow-sm shadow-black/15 transition hover:border-red/55 hover:bg-red/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/40 focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:pointer-events-none disabled:opacity-45;
+  }
+  .field-control {
+    @apply rounded-xl border border-border/90 bg-bg/80 font-mono text-xs text-white shadow-inner shadow-black/20 transition placeholder:text-muted/50 focus:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/20;
+  }
+}
+
 :root {
   --bg:      #080c10;
   --surface: #0d1117;
@@ -22,10 +40,33 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+::selection {
+  background: rgba(0, 255, 135, 0.18);
+  color: #f0f6fc;
+}
+
+/* Subtle depth behind content (below scanlines) */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(0, 255, 135, 0.07), transparent 55%),
+    radial-gradient(ellipse 80% 50% at 100% 50%, rgba(88, 166, 255, 0.04), transparent 45%);
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: var(--surface); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #2a3348; }
 
 /* Scan-line texture overlay */
 body::before {
@@ -48,6 +89,6 @@ body::before {
 }
 
 .card-glow:hover {
-  box-shadow: 0 0 0 1px rgba(0,255,135,0.15), 0 8px 32px rgba(0,0,0,0.4);
+  box-shadow: 0 0 0 1px rgba(0,255,135,0.15), 0 12px 40px rgba(0,0,0,0.45);
   transition: box-shadow 0.2s ease;
 }

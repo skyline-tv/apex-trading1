@@ -109,7 +109,7 @@ export default function History() {
     <div className="animate-fade-in space-y-6">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h1 className="font-sans font-800 text-2xl text-white tracking-tight">Closed Trades</h1>
+          <h1 className="font-sans font-800 text-2xl sm:text-3xl text-white tracking-tight">Closed Trades</h1>
           <p className="font-mono text-[11px] text-muted mt-0.5 tracking-widest">
             {filteredTrades.length}/{trades.length} CLOSED TRADES SHOWN
           </p>
@@ -122,7 +122,7 @@ export default function History() {
               placeholder="Filter asset..."
               value={assetFilter}
               onChange={(e) => setAssetFilter(e.target.value)}
-              className="bg-surface border border-border text-white font-mono text-xs pl-7 pr-3 py-2 rounded-lg w-36 focus:outline-none focus:border-accent/50"
+              className="field-control w-36 pl-7 pr-3 py-2"
             />
           </div>
           <div className="relative">
@@ -130,7 +130,7 @@ export default function History() {
             <select
               value={decisionFilter}
               onChange={(e) => setDecisionFilter(e.target.value)}
-              className="bg-surface border border-border text-white font-mono text-xs pl-7 pr-3 py-2 rounded-lg focus:outline-none focus:border-accent/50"
+              className="field-control pl-7 pr-3 py-2"
             >
               {['ALL', 'BUY', 'SELL'].map((d) => (
                 <option key={d} value={d}>{d}</option>
@@ -140,26 +140,27 @@ export default function History() {
           <select
             value={limit}
             onChange={(e) => setLimit(Number(e.target.value))}
-            className="bg-surface border border-border text-white font-mono text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-accent/50"
+            className="field-control px-3 py-2"
           >
             {[25, 50, 100, 250].map((n) => (
               <option key={n} value={n}>Last {n}</option>
             ))}
           </select>
-          <button
-            onClick={() => fetch({ silent: true })}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg border border-border text-muted hover:text-white hover:border-white/20 transition font-mono text-xs"
-          >
+          <button type="button" onClick={() => fetch({ silent: true })} className="btn-ghost">
             {loading || refreshing ? <Spinner size={13} /> : <RefreshCw size={13} />}
             Refresh
           </button>
         </div>
       </div>
 
-      {error && <div className="border border-red/30 bg-red/5 rounded-xl px-4 py-3 font-mono text-xs text-red">{error}</div>}
+      {error && (
+        <div role="alert" className="rounded-2xl border border-red/35 bg-red/[0.06] px-4 py-3 font-mono text-xs text-red shadow-sm shadow-black/20">
+          {error}
+        </div>
+      )}
       {refreshing && !loading && (
-        <div className="border border-border bg-surface rounded-xl px-4 py-3 font-mono text-xs text-muted">
-          Refreshing trades and rule logs...
+        <div className="rounded-2xl border border-border/80 bg-surface/80 px-4 py-3 font-mono text-xs text-muted shadow-sm shadow-black/15 backdrop-blur-sm">
+          Refreshing trades and rule logs…
         </div>
       )}
 
