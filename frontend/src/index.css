@@ -4,7 +4,7 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-4 py-2.5 font-sans text-xs font-700 tracking-wider text-bg shadow-lg shadow-black/25 transition hover:bg-accent/90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/45 focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:pointer-events-none disabled:opacity-45;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-4 py-2.5 font-sans text-xs font-bold tracking-wider text-bg shadow-lg shadow-black/25 transition hover:bg-accent/90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/45 focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:pointer-events-none disabled:opacity-45;
   }
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-xl border border-border/90 bg-surface/40 px-3 py-2 font-mono text-xs text-muted shadow-sm shadow-black/10 backdrop-blur-sm transition hover:border-white/15 hover:text-white hover:bg-border/30 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:pointer-events-none disabled:opacity-45;
